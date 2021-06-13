@@ -21,7 +21,7 @@ public class RecordBuilder {
         return notification;
     }
 
-    private PosInvoice getMaskedInvoice(PosInvoice invoice){
+    public PosInvoice getMaskedInvoice(PosInvoice invoice){
         invoice.setCustomerCardNo(null);
         if (invoice.getDeliveryType().equalsIgnoreCase("HOME-DELIVERY")){
             invoice.getDeliveryAddress().setAddressLine(null);
