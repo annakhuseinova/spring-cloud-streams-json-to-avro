@@ -19,7 +19,6 @@ public class NotificationProcessorService {
 
     private final RecordBuilder recordBuilder;
 
-
     @StreamListener("notification-input-channel")
     @SendTo("notification-output-channel")
     public KStream<String, Notification> process(KStream<String, PosInvoice> input){
