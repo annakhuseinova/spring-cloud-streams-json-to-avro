@@ -1,0 +1,32 @@
+spring:
+  cloud:
+    stream:
+      # binding - we bind channels to topics. json is the default type of value serde
+      bindings:
+        notification-input-channel:
+          destination: pos-topic
+        notification-output-channel:
+          destination: loyalty-topic
+        hadoop-input-channel:
+          destination: pos-topic
+        hadoop-output-channel:
+          destination: hadoop-sink-topic
+      kafka:
+        streams:
+          binder:
+            brokers: localhost:9092
+            configuration:
+              schema:
+                registry:
+                  url: http://localhost:8081
+          # we define these properties of our producers here (not under spring.cloud.stream.bindings...) because
+          # Spring Cloud Stream only creates channels for us. In order to specify other properties such as
+          # serialization properties we need to do that under spring.cloud.stream.kafka.streams.binder... section as
+          # it is the binder that performs serde
+          bindings:
+            notification-output-channel:
+              producer:
+                valueSerde: io.confluent.kafka.streams.serdes.avro.SpecificAvroSerde
+            hadoop-output-channel:
+              producer:
+                valueSerde: io.confluent.kafka.streams.serdes.avro.SpecificAvroSerde
